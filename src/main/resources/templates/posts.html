@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link href="./webjars/materializecss/0.100.2/css/materialize.css" type="text/css" rel="stylesheet"
+          media="screen,projection"/>
+</head>
+<body>
+<div class="container">
+    <nav>
+        <div class="nav-wrapper">
+            <!--<a href="#" class="brand-logo">QS</a>-->
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a href="posts.html" th:href="@{/posts}">
+                        <i class="material-icons right">view_list</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="newPost.html" th:href="@{/newPost}">
+                        <i class="material-icons right">add</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!--<ul class="collection">-->
+        <!--<li class="collection-item avatar" th:each="post : ${postPage.content}">-->
+            <!--<div class="hide" th:text="${post.id}">post.id</div>-->
+            <!--<div>-->
+                <!--<a th:href="${post.content}" th:text="${post.title}"></a>-->
+            <!--</div>-->
+            <!--<div th:text="${post.type}">post.type</div>-->
+            <!--<div th:text="${post.authorId}">post.authorId</div>-->
+            <!--<div th:text="${post.from}">post.from</div>-->
+            <!--<div th:text="${post.status}">post.status</div>-->
+        <!--</li>-->
+    <!--</ul>-->
+            <div class="row"
+                 th:each="rowIndex : ${#numbers.sequence(0,__${rowCount}__ - 1)}">
+                <div class="col s12"
+                     th:each="colIndex : ${#numbers.sequence(0,__${postPage.numberOfElements}__ % __${elementPerRow}__ eq 0 ? __${elementPerRow}__ - 1: __${postPage.numberOfElements}__ % __${elementPerRow}__ - 1)}">
+                    <div class="card blue-grey hoverable">
+                        <div class="card-content white-text" th:object="${postPage.content[__${rowIndex}__ * __${elementPerRow}__ + __${colIndex}__]}">
+                            <span th:text="*{title}">title</span>
+                            <!--<p>-->
+                                <!--this is a p ong long long long long long long long long.-->
+                            <!--</p>-->
+                            <div class="card-action">
+                                <a class="waves-effect waves-light" th:href="*{content}" target="_blank"><i class="material-icons">insert_link</i></a>
+                                <!--<a class="waves-effect waves-light" href="#"><i class="material-icons">insert_photo</i></a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <ul class="pagination">
+        <li th:class="${postPage.first} ? disabled : waves-effect">
+            <a th:href="@{posts.html(page=${postPage.number} eq 0 ? 0 : ${postPage.number} - 1)}"><i class="material-icons">chevron_left</i></a>
+        </li>
+        <!--<li class="active"><a href="#!">1</a></li>-->
+        <!--<li class="waves-effect"><a href="#!">2</a></li>-->
+        <!--<li class="waves-effect"><a href="#!">3</a></li>-->
+        <!--<li class="waves-effect"><a href="#!">4</a></li>-->
+        <!--<li class="waves-effect"><a href="#!">5</a></li>-->
+
+        <li th:each="pageIndex : ${#numbers.sequence(__${postPage.number}__, (__${postPage.totalPages}__ - __${postPage.number}__ gt 5 ? __${postPage.number}__ + 5 : __${postPage.totalPages}__) - 1 )}"
+            th:class="${pageIndex} eq __${postPage.number}__ ? active : waves-effect">
+            <a th:href="@{posts.html(page=${pageIndex})}" th:text="${pageIndex} + 1">link</a>
+        </li>
+
+        <li th:class="${postPage.last} ? disabled : waves-effect">
+            <a th:href="@{posts.html(page=${postPage.last} ? ${postPage.number} : ${postPage.number} + 1)}"><i class="material-icons">chevron_right</i></a>
+        </li>
+    </ul>
+</div>  
+
+<!--js文件放在最后是因为希望早点加载完页面-->
+<script src="./webjars/jquery/3.2.1/jquery.js"></script>
+<script src="./webjars/materializecss/0.100.2/js/materialize.js"></script>
+</body>
+</html>

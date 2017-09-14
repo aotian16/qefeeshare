@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>nav</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link href="./webjars/materializecss/0.100.2/css/materialize.css" type="text/css" rel="stylesheet"
+          media="screen,projection"/>
+</head>
+<body>
+<nav layout:fragment="nav">
+    <div class="nav-wrapper">
+        <!--<a href="#" class="brand-logo">QS</a>-->
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li>
+                <a href="../posts.html" th:href="@{/posts}">
+                    <i class="material-icons right">view_list</i>
+                </a>
+            </li>
+            <li>
+                <a href="../newPost.html" th:href="@{/newPost}">
+                    <i class="material-icons right">add</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!--js文件放在最后是因为希望早点加载完页面-->
+<script src="./webjars/jquery/3.2.1/jquery.js"></script>
+<script src="./webjars/materializecss/0.100.2/js/materialize.js"></script>
+</body>
+</html>
